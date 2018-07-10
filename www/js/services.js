@@ -1,50 +1,44 @@
 angular.module('starter.services', [])
 
-.factory('Chats', function() {
-  // Might use a resource here that returns a JSON array
+.factory('api', function ($http,config){
+    var service = {
+        getAll: _getAll,
+        get: _get,
+        create: _create,
+        update: _update,
+        updateInfo: _updateInfo,
+        remove: _remove,
+        getInfos: _getInfos,
+        getInfo: _getInfo,
+        changeSit: _changeSit
+    };
+    return service;
 
-  // Some fake testing data
-  var chats = [{
-    id: 0,
-    name: 'Ben Sparrow',
-    lastText: 'You on your way?',
-    face: 'img/ben.png'
-  }, {
-    id: 1,
-    name: 'Max Lynx',
-    lastText: 'Hey, it\'s me',
-    face: 'img/max.png'
-  }, {
-    id: 2,
-    name: 'Adam Bradleyson',
-    lastText: 'I should buy a boat',
-    face: 'img/adam.jpg'
-  }, {
-    id: 3,
-    name: 'Perry Governor',
-    lastText: 'Look at my mukluks!',
-    face: 'img/perry.png'
-  }, {
-    id: 4,
-    name: 'Mike Harrington',
-    lastText: 'This is wicked good ice cream.',
-    face: 'img/mike.png'
-  }];
-
-  return {
-    all: function() {
-      return chats;
-    },
-    remove: function(chat) {
-      chats.splice(chats.indexOf(chat), 1);
-    },
-    get: function(chatId) {
-      for (var i = 0; i < chats.length; i++) {
-        if (chats[i].id === parseInt(chatId)) {
-          return chats[i];
-        }
-      }
-      return null;
+    function _changeSit(id) {
+        return $http.get(config.baseUrl + "/users/sit/" + id);
     }
-  };
+    function _getInfo(id) {
+        return $http.get(config.baseUrl + "/users/info/" + id);
+    }
+    function _getInfos() {
+        return $http.get(config.baseUrl + "/users/info");
+    }
+    function _remove(id) {
+        return $http.delete(config.baseUrl + "/users/" + id);
+    }
+    function _updateInfo(data) {
+        return $http.post(config.baseUrl + "/users/info",data);
+    }
+    function _update(data) {
+        return $http.put(config.baseUrl + "/users", data);
+    }
+    function _create(data) {
+        return $http.post(config.baseUrl + "/users",data);
+    }
+    function _get(id) {
+        return $http.get(config.baseUrl + "/users/" + id);
+    }
+    function _getAll() {
+        return $http.get(config.baseUrl + "/users");
+    }
 });

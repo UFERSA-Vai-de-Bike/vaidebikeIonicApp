@@ -1,0 +1,31 @@
+<ion-modal-view>
+    <ion-header-bar>
+        <h1 class="title">Novo Usuário</h1>
+        <div class="buttons">
+            <button class="button" ng-click="modal.remove()">Cancelar</button>
+        </div>
+    </ion-header-bar>
+    <ion-content class="padding">
+        <form name="formAdd">
+        <div class="list">
+            <label class="item item-input">
+                <span class="input-label">Usuário</span>
+                <input ng-model="user.username" type="text" required>
+            </label>
+            <label class="item item-input">
+                <span class="input-label">Senha</span>
+                <input type="password" ng-model="user.password" required>
+            </label>
+            <label class="item item-input item-select">
+                <div class="input-label">
+                    Hierarquia
+                </div>
+                <select required ng-options="role.cod as role.name for role in roles"
+                        ng-model="user.role" ng-change="changeHierarq(user.role)">
+                </select>
+            </label>
+            <button class="button button-full button-positive" ng-disabled="formAdd.$invalid" ng-click="createUser(user)">Create</button>
+        </div>
+        </form>
+    </ion-content>
+</ion-modal-view>
